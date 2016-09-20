@@ -21,5 +21,10 @@ describe BaseMessage do
         message_delivery.send(:processed_sms).send(:welcome_without_to, 'Diego')
       }.to raise_error(ArgumentError, 'You need to provide at least a receipient')
     end
+
+    it 'performs background sms processing' do
+      message_delivery = BaseMessage.welcome_without_to('Diego', 'Company')
+      expect(message_delivery).to respond_to(:deliver_later)
+    end
   end
 end
